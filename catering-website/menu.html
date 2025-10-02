@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catering Service | Menu</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+      <!-- Navbar -->
+  <header>
+  <nav class="navbar">
+    <div class="logo">
+      <img src="images/logo.png" alt="Catering Logo" />
+      <h1>Catering Service</h1>
+    </div>
+
+     <!-- Navigation links -->
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="cart.html">Order</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="admin.html">Admin</a></li>
+    </ul>
+
+    <!-- Mobile Menu Toggle Button -->
+    <button class="menu-toggle">☰</button>
+  </nav>
+</header>
+
+
+
+
+<script>
+  const toggleBtn = document.querySelector(".menu-toggle");
+  const navLinks = document.querySelector(".nav-links");
+
+  toggleBtn.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+  });
+</script>
+  <!-- Menu Section -->
+  <section class="menu-section">
+    <h2>Our Menu</h2>
+    <table class="menu-table">
+      <thead>
+        <tr>
+          <th>Dish</th>
+          <th>Description</th>
+          <th>Price</th>
+          <th>Order</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Paneer Tikka</td>
+          <td>Grilled paneer cubes marinated in spices</td>
+          <td>₹150</td>
+          <td><button class="btn add-cart">Add to Cart</button></td>
+        </tr>
+        <tr>
+          <td>Veg Biryani</td>
+          <td>Fragrant rice cooked with vegetables & spices</td>
+          <td>₹200</td>
+          <td><button class="btn add-cart">Add to Cart</button></td>
+        </tr>
+        <tr>
+          <td>Butter Chicken</td>
+          <td>Creamy tomato-based chicken curry</td>
+          <td>₹250</td>
+          <td><button class="btn add-cart">Add to Cart</button></td>
+        </tr>
+        <tr>
+          <td>Chocolate Cake</td>
+          <td>Rich and moist chocolate layered cake</td>
+          <td>₹120</td>
+          <td><button class="btn add-cart">Add to Cart</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Catering Service | All Rights Reserved</p>
+  </footer>
+
+  <script>
+  // Add to cart using localStorage
+  const buttons = document.querySelectorAll(".add-cart");
+
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      let itemName = btn.getAttribute("data-name");
+      let itemPrice = btn.getAttribute("data-price");
+
+      // Get existing cart or empty array
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      // Push new item
+      cart.push({ name: itemName, price: itemPrice });
+
+      // Save back to localStorage
+      localStorage.setItem("cart", JSON.stringify(cart));
+
+      alert(itemName + " added to cart ✅");
+    });
+  });
+</script>
+
+
+  <script src="js/menu.js"></script>
+</body>
+</html>

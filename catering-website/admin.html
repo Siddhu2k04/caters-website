@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+   
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - Catering Orders</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background: #ff2929;
+      color: white;
+    }
+    .btn {
+      padding: 6px 12px;
+      margin: 2px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .approve { background: green; color: white; }
+    .reject { background: red; color: white; }
+  </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+  <header>
+  <nav class="navbar">
+    <div class="logo">
+      <img src="images/logo.png" alt="Catering Logo" />
+      <h1>Catering Service</h1>
+    </div>
+
+    <!-- Navigation links -->
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="cart.html">Order</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="admin.html">Admin</a></li>
+    </ul>
+
+    <!-- Mobile Menu Toggle Button -->
+    <button class="menu-toggle">☰</button>
+  </nav>
+</header>
+
+<script>
+  const toggleBtn = document.querySelector(".menu-toggle");
+  const navLinks = document.querySelector(".nav-links");
+
+  toggleBtn.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+  });
+</script>
+  <h1>Admin Panel - Orders</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Dishes</th>
+        <th>Date</th>
+        <th>People</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="orders-table"></tbody>
+  </table>
+
+  <script>
+    function loadOrders() {
+      const orders = JSON.parse(localStorage.getItem("orders")) || [];
+      const table = document.getElementById("orders-table");
+      table.innerHTML = "";
+
+      orders.forEach((order, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${order.dishes.join(", ")}</td>
+          <td>${order.date}</td>
+          <td>${order.people}</td>
+          <td>${order.status}</td>
+          <td>
+            <button class="btn approve" onclick="updateStatus(${index}, 'Approved')">Approve</button>
+            <button class="btn reject" onclick="updateStatus(${index}, 'Rejected')">Reject</button>
+          </td>
+        `;
+        table.appendChild(row);
+      });
+    }
+
+    function updateStatus(index, status) {
+      let orders = JSON.parse(localStorage.getItem("orders")) || [];
+      orders[index].status = status;
+      localStorage.setItem("orders", JSON.stringify(orders));
+      loadOrders();
+    }
+
+    loadOrders();
+  </script>
+
+</body>
+</html>

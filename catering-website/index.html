@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catering Service | Home</title>
+  <link rel="stylesheet" href="css\style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header>
+  <nav class="navbar">
+    <div class="logo">
+      <img src="images/logo.png" alt="Catering Logo" />
+      <h1>Catering Service</h1>
+    </div>
+
+    <!-- Navigation links -->
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="cart.html">Order</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="admin.html">Admin</a></li>
+    </ul>
+
+    <!-- Mobile Menu Toggle Button -->
+    <button class="menu-toggle">☰</button>
+  </nav>
+</header>
+
+<script>
+  const toggleBtn = document.querySelector(".menu-toggle");
+  const navLinks = document.querySelector(".nav-links");
+
+  toggleBtn.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+  });
+</script>
+
+  <!-- Scrolling Images (Carousel) -->
+<section class="carousel">
+  <h2>Our Delicious Dishes</h2>
+  <div class="carousel-container" id="carousel">
+    <img src="images/dishes/image.png" alt="Starter">
+    <img src="images/dishes/main1.jpg" alt="Main Course">
+    <img src="images/dishes/dessert1.jpg" alt="Dessert">
+    <img src="images/dishes/starter2.jpg" alt="Starter 2">
+    <img src="images/dishes/main2.jpg" alt="Main 2">
+  </div>
+</section>
+
+
+<script>
+  // Auto scroll carousel
+  const carousel = document.getElementById("carousel");
+  let scrollAmount = 0;
+
+  function autoScroll() {
+    if (scrollAmount >= carousel.scrollWidth - carousel.clientWidth) {
+      scrollAmount = 0; // Reset scroll
+    } else {
+      scrollAmount += 2; // speed
+    }
+    carousel.scrollTo({
+      left: scrollAmount,
+      behavior: "smooth"
+    });
+  }
+
+  setInterval(autoScroll, 50); // Adjust speed
+</script>
+
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h2>Delicious Catering for Every Occasion</h2>
+      <p>Freshly prepared dishes for parties, weddings, and corporate events.</p>
+      <a href="menu.html" class="btn">View Menu</a>
+    </div>
+  </section>
+
+  <!-- Specials Section -->
+  <section class="specials">
+    <h2>Our Specials</h2>
+    <div class="special-items">
+      <div class="item">
+        <img src="images/dishes/starter1.jpg" alt="Starter">
+        <h3>Starters</h3>
+        <p>Perfect appetizers to begin your event.</p>
+      </div>.
+      <div class="item">
+        <img src="images/dishes/main1.jpg" alt="Main Course">
+        <h3>Main Course</h3>
+        <p>Delicious meals to satisfy everyone.</p>
+      </div>
+      <div class="item">
+        <img src="images/dishes/dessert1.jpg" alt="Dessert">
+        <h3>Desserts</h3>
+        <p>Sweet treats to end on a high note.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Calendar Section -->
+<section class="calendar-section">
+  <h2>Check Availability</h2>
+  <div id="calendar"></div>
+  <p id="calendar-msg">Click a green date to book your order.</p>
+</section>
+
+<script>
+  const calendar = document.getElementById("calendar");
+  const msg = document.getElementById("calendar-msg");
+
+  // Example booked dates (can later come from database)
+  const bookedDates = ["2025-09-12", "2025-09-15", "2025-09-20"];
+
+  // Generate calendar for current month
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth();
+
+  const firstDay = new Date(year, month, 1).getDay(); // first weekday
+  const lastDate = new Date(year, month + 1, 0).getDate(); // last date
+
+  // Empty slots before first day
+  for (let i = 0; i < firstDay; i++) {
+    const empty = document.createElement("div");
+    calendar.appendChild(empty);
+  }
+
+  // Fill days
+  for (let d = 1; d <= lastDate; d++) {
+    const date = new Date(year, month, d);
+    const dateStr = date.toISOString().split("T")[0]; // format yyyy-mm-dd
+    const day = document.createElement("div");
+
+    day.classList.add("day");
+    day.textContent = d;
+
+    if (bookedDates.includes(dateStr)) {
+      day.classList.add("booked");
+    } else {
+      day.classList.add("available");
+      day.addEventListener("click", () => {
+        msg.textContent = `✅ You selected ${dateStr} for your order.`;
+      });
+    }
+
+    calendar.appendChild(day);
+  }
+</script>
+
+
+    <!-- Rating Section -->
+ 
+  <style>
+    .rating {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      font-size: 40px;
+      cursor: pointer;
+    }
+    .star {
+      color: gray;
+      transition: color 0.3s;
+    }
+    .star.active {
+      color: gold;
+    }
+    .review-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+    textarea {
+      width: 300px;
+      height: 80px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      resize: none;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background: #007bff;
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .review-list {
+      max-width: 400px;
+      margin: 20px auto;
+      border: 1px solid #ddd;
+      padding: 15px;
+      border-radius: 8px;
+      background: #f9f9f9;
+    }
+    .review-item {
+      border-bottom: 1px solid #ccc;
+      padding: 10px 0;
+    }
+    .review-item:last-child {
+      border-bottom: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h2 style="text-align:center;">Rate Our Caterer</h2>
+  
+  <div class="rating" id="rating">
+    <span class="star" data-value="1">&#9733;</span>
+    <span class="star" data-value="2">&#9733;</span>
+    <span class="star" data-value="3">&#9733;</span>
+    <span class="star" data-value="4">&#9733;</span>
+    <span class="star" data-value="5">&#9733;</span>
+  </div>
+
+  <div class="review-box">
+    <textarea id="review" placeholder="Write your review here..."></textarea>
+    <button id="submit">Submit</button>
+  </div>
+
+  <div class="review-list">
+    <h3>All Reviews</h3>
+    <div id="reviews"></div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    // Import Firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getFirestore, collection, addDoc, query, orderBy, onSnapshot } 
+      from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+    // ✅ Replace with your actual Firebase Config
+    const firebaseConfig = {
+      apiKey: "AIzaSyAFcR7dpuPLCKxKVF8U21ogtLARx2djXpM",
+      authDomain: "caters-710ea.firebaseapp.com",
+      projectId: "caters-710ea",
+      storageBucket: "caters-710ea.appspot.com",
+      messagingSenderId: "1058333296618",
+      appId: "1:1058333296618:web:ba63fac8c4fca4758f5493",
+      measurementId: "G-XFB81TQHKS"
+    };
+
+    // Init Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const stars = document.querySelectorAll(".star");
+    const reviewInput = document.getElementById("review");
+    const submitBtn = document.getElementById("submit");
+    const reviewsDiv = document.getElementById("reviews");
+
+    let selectedRating = 0;
+
+    // ⭐ Highlight stars
+    function highlightStars(value) {
+      stars.forEach(s => s.classList.remove("active"));
+      for (let i = 0; i < value; i++) {
+        stars[i].classList.add("active");
+      }
+    }
+
+    // ⭐ Click stars
+    stars.forEach(star => {
+      star.addEventListener("click", () => {
+        selectedRating = star.getAttribute("data-value");
+        highlightStars(selectedRating);
+      });
+    });
+import { getFirestore, collection, addDoc, serverTimestamp, getDocs } 
+  from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+const db = getFirestore(app);
+
+// ✅ Submit Review
+submitBtn.addEventListener("click", async () => {
+  const review = reviewInput.value.trim();
+
+  if (selectedRating == 0) {
+    alert("Please select a star rating!");
+    return;
+  }
+  if (review === "") {
+    alert("Please write a review!");
+    return;
+  }
+
+  try {
+    await addDoc(collection(db, "reviews"), {
+      rating: selectedRating,   // Number
+      review: review,           // String
+      timestamp: serverTimestamp() // Firestore timestamp
+    });
+
+    // Clear input
+    reviewInput.value = "";
+    selectedRating = 0;
+    highlightStars(0);
+    alert("Thank you for your feedback!");
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+});
+
+
+    // ✅ Retrieve reviews live (newest first)
+    const q = query(collection(db, "reviews"), orderBy("timestamp", "desc"));
+    onSnapshot(q, (snapshot) => {
+      reviewsDiv.innerHTML = "";
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        const div = document.createElement("div");
+        div.classList.add("review-item");
+        div.innerHTML = `
+          <p><strong>⭐ ${data.rating}/5</strong></p>
+          <p>${data.review}</p>
+        `;
+        reviewsDiv.appendChild(div);
+      });
+    });
+  </script>
+</body>
+
+</body>
+</html>
+
+</body>
+</html>
+
+
+</body>
+</html>
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Catering Service | All Rights Reserved</p>
+  </footer>
+
+
+
+ <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAFcR7dpuPLCKxKVF8U21ogtLARx2djXpM",
+    authDomain: "caters-710ea.firebaseapp.com",
+    projectId: "caters-710ea",
+    storageBucket: "caters-710ea.firebasestorage.app",
+    messagingSenderId: "1058333296618",
+    appId: "1:1058333296618:web:ba63fac8c4fca4758f5493",
+    measurementId: "G-XFB81TQHKS"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  console.log("Firebase initialized ✅");
+</script>
+
+
+</body>
+</html>
