@@ -15,13 +15,21 @@
     .btn { background:#ff9800; color:#fff; border:none; padding:12px; width:100%; border-radius:6px; font-size:16px; cursor:pointer; }
     .btn:hover { background:#e68900; }
     label { display:block; margin:10px 0 5px; font-weight:bold; }
-    input[type="number"] { width:100%; padding:10px; border-radius:6px; border:1px solid #ccc; outline:none; }
-    input[type="number"]:focus { border-color:#ff9800; box-shadow:0 0 5px rgba(255,152,0,0.5); }
+    input[type="number"], input[type="text"], input[type="tel"] { width:100%; padding:10px; border-radius:6px; border:1px solid #ccc; outline:none; }
+    input:focus { border-color:#ff9800; box-shadow:0 0 5px rgba(255,152,0,0.5); }
   </style>
 </head>
 <body>
   <div class="container">
     <h2>Order Summary</h2>
+
+    <!-- Customer Name -->
+    <label for="customerName">Customer Name:</label>
+    <input type="text" id="customerName" name="customerName" placeholder="Enter your name">
+
+    <!-- Mobile Number -->
+    <label for="customerMobile">Mobile Number:</label>
+    <input type="tel" id="customerMobile" name="customerMobile" placeholder="Enter your mobile number">
 
     <!-- Number of People -->
     <label for="people">Number of People:</label>
@@ -36,7 +44,10 @@
     const summaryDiv = document.getElementById("order-summary");
     const peopleInput = document.getElementById("people");
     const paymentBtn = document.getElementById("paymentBtn");
+    const nameInput = document.getElementById("customerName");
+    const mobileInput = document.getElementById("customerMobile");
 
+    // Render Order Summary
     function renderOrderSummary() {
       const numPeople = parseInt(peopleInput.value) || 1;
 
@@ -81,8 +92,19 @@
     // Recalculate when number of people changes
     peopleInput.addEventListener("input", renderOrderSummary);
 
-    // Proceed to payment
+    // Save customer info & proceed to payment
     paymentBtn.addEventListener("click", () => {
+      const name = nameInput.value.trim();
+      const mobile = mobileInput.value.trim();
+
+      if (!name || !mobile) {
+        alert("Please enter both your name and mobile number.");
+        return;
+      }
+
+      localStorage.setItem("customerName", name);
+      localStorage.setItem("customerMobile", mobile);
+
       window.location.href = "payment.html";
     });
   </script>
