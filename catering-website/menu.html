@@ -4,36 +4,41 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Catering Service | Menu</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css\style.css">
 </head>
 <body>
 
   <!-- Navbar -->
   <header>
-    <nav class="navbar">
-      <div class="logo">
-        <img src="images/logo.png" alt="Catering Logo" />
-        <h1>Catering Service</h1>
-      </div>
-      <ul class="nav-links">
-        <li><a href="index.html" class="active">Home</a></li>
-        <li><a href="menu.html">Menu</a></li>
-        <li><a href="cart.html">Order</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="admin.html">Admin</a></li>
-      </ul>
-      <button class="menu-toggle">☰</button>
-    </nav>
-  </header>
+  <nav class="navbar">
+    <div class="logo">
+      <img src="images/logo.png" alt="Catering Logo" />
+      <h1>Catering Service</h1>
+    </div>
 
-  <script>
-    const toggleBtn = document.querySelector(".menu-toggle");
-    const navLinks = document.querySelector(".nav-links");
-    toggleBtn.addEventListener("click", () => {
-      navLinks.classList.toggle("active");
-    });
-  </script>
+    <!-- Navigation links -->
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="cart.html">Order</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="admin.html">Admin</a></li>
+    </ul>
+
+    <!-- Mobile Menu Toggle Button -->
+    <button class="menu-toggle">☰</button>
+  </nav>
+</header>
+
+<script>
+  const toggleBtn = document.querySelector(".menu-toggle");
+  const navLinks = document.querySelector(".nav-links");
+
+  toggleBtn.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+  });
+</script>
 
   <!-- Menu Section -->
   <section class="menu-section">

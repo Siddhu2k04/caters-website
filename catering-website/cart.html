@@ -4,42 +4,41 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Your Cart</title>
-  <style>
-    body { font-family:'Segoe UI',sans-serif; background:#f9f9f9; margin:0; padding:0; }
-    .navbar { display:flex; justify-content:space-between; align-items:center; background:#333; color:#fff; padding:10px 20px; }
-    .navbar .logo { display:flex; align-items:center; gap:10px; }
-    .navbar .logo img { height:40px; }
-    .nav-links { list-style:none; display:flex; gap:15px; }
-    .nav-links li a { color:#fff; text-decoration:none; }
-    .nav-links li a:hover { color:#ff9800; }
-    .order-section { max-width:800px; margin:40px auto; background:#fff; padding:25px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
-    h2 { text-align:center; margin-bottom:20px; }
-    table { width:100%; border-collapse:collapse; margin:20px 0; }
-    th,td { border:1px solid #ddd; padding:10px; text-align:center; }
-    th { background:#ff9800; color:#fff; }
-    label { font-weight:bold; margin-top:12px; display:block; }
-    input { width:100%; padding:10px; margin:5px 0 15px; border:1px solid #ccc; border-radius:6px; }
-    .btn { background:#ff9800; color:#fff; border:none; padding:12px; width:100%; border-radius:6px; font-size:16px; cursor:pointer; }
-    .btn:hover { background:#e68900; }
-  </style>
+  <link rel="stylesheet" href="css\style.css">
 </head>
 <body>
+
   <!-- Navbar -->
   <header>
-    <nav class="navbar">
-      <div class="logo">
-        <img src="images/logo.png" alt="Catering Logo" />
-        <h1>Catering Service</h1>
-      </div>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="menu.html">Menu</a></li>
-        <li><a href="cart.html" class="active">Order</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
+  <nav class="navbar">
+    <div class="logo">
+      <img src="images/logo.png" alt="Catering Logo" />
+      <h1>Catering Service</h1>
+    </div>
+
+    <!-- Navigation links -->
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="cart.html">Order</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="admin.html">Admin</a></li>
+    </ul>
+
+    <!-- Mobile Menu Toggle Button -->
+    <button class="menu-toggle">☰</button>
+  </nav>
+</header>
+
+<script>
+  const toggleBtn = document.querySelector(".menu-toggle");
+  const navLinks = document.querySelector(".nav-links");
+
+  toggleBtn.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+  });
+</script>
 
   <!-- Order Section -->
   <section class="order-section">

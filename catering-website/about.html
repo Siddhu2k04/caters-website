@@ -4,59 +4,48 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About Us | Catering Service</title>
+    <link rel="stylesheet" href="css\style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header>
+  <nav class="navbar">
+    <div class="logo">
+      <img src="images/logo.png" alt="Catering Logo" />
+      <h1>Catering Service</h1>
+    </div>
+
+    <!-- Navigation links -->
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="cart.html">Order</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="admin.html">Admin</a></li>
+    </ul>
+
+    <!-- Mobile Menu Toggle Button -->
+    <button class="menu-toggle">☰</button>
+  </nav>
+</header>
+
+<script>
+  const toggleBtn = document.querySelector(".menu-toggle");
+  const navLinks = document.querySelector(".nav-links");
+
+  toggleBtn.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+  });
+</script>
+
   <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: #fff7f0;
       color: #333;
-    }
-
-    /* Navbar styling */
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 40px;
-      background-color: #343a40;
-      color: white;
-      flex-wrap: wrap;
-    }
-
-    .navbar .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .navbar .logo img {
-      width: 50px;
-      height: 50px;
-      object-fit: cover;
-    }
-
-    .navbar .logo h1 {
-      font-size: 1.5rem;
-      color: white;
-    }
-
-    .navbar .nav-links {
-      list-style: none;
-      display: flex;
-      gap: 25px;
-      flex-wrap: wrap;
-    }
-
-    .navbar .nav-links li a {
-      text-decoration: none;
-      color: white;
-      font-weight: 500;
-      transition: color 0.3s;
-    }
-
-    .navbar .nav-links li a:hover,
-    .navbar .nav-links li a.active {
-      color: #f8d210;
     }
 
     /* Hero Section */
@@ -113,22 +102,6 @@
 </head>
 <body>
 
-  <!-- Navbar -->
-  <header>
-    <nav class="navbar">
-      <div class="logo">
-        <img src="images/logo.png" alt="Catering Logo">
-        <h1>Catering Service</h1>
-      </div>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="menu.html">Menu</a></li>
-        <li><a href="cart.html">Order</a></li>
-        <li><a href="about.html" class="active">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
 
   <!-- Hero Section -->
   <div class="hero">
