@@ -1,12 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catering Service | Menu</title>
-  <link rel="stylesheet" href="css\style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css\style.css">
+<title>Catering Menu</title>
+
+
+
+
+<style>
+ /* General Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  background: #fff8f0;
+}
+
+header {
+  background: #ff7f50;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+/* Menu Section */
+.menu-section {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.menu-section h2 {
+  font-size: 2rem;
+  color: #ff7f50;
+  margin-bottom: 30px;
+}
+
+/* Menu Grid */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 cards on laptop/desktop */
+  gap: 20px;
+  justify-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.menu-item {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  cursor: pointer;
+  width: 100%;
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.menu-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.menu-item img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+.menu-item h3 {
+  margin: 10px 0 5px;
+  color: #ff7f50;
+  font-size: 1.2rem;
+}
+
+.menu-item .price {
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.menu-item button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #ff7f50;
+  color: #fff;
+  cursor: pointer;
+  margin-bottom: 15px;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.menu-item button:hover {
+  background: #ff5722;
+  transform: scale(1.05);
+}
+
+/* Responsive Grid */
+@media (max-width: 1024px) {
+  .menu-grid {
+    grid-template-columns: repeat(3, 1fr); /* 3 cards per row on tablet */
+  }
+  .menu-section h2 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .menu-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 cards per row on mobile */
+  }
+  .menu-section h2 {
+    font-size: 1.6rem;
+  }
+  .menu-item img {
+    height: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .menu-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 cards per row on small phones */
+  }
+  .menu-section h2 {
+    font-size: 1.4rem;
+  }
+  .menu-item img {
+    height: 140px;
+  }
+  .menu-item h3 {
+    font-size: 1rem;
+  }
+}
+
+</style>
 </head>
 <body>
+
+<header>
+
 
   <!-- Navbar -->
   <header>
@@ -16,8 +156,8 @@
       <h1>Catering Service</h1>
     </div>
 
-    <!-- Navigation links -->
-    <ul class="nav-links">
+    
+<ul class="nav-links">
       <li><a href="index.html" class="active">Home</a></li>
       <li><a href="menu.html">Menu</a></li>
       <li><a href="cart.html">Order</a></li>
@@ -40,71 +180,125 @@
   });
 </script>
 
-  <!-- Menu Section -->
-  <section class="menu-section">
-    <h2>Our Menu</h2>
-    <table class="menu-table">
-      <thead>
-        <tr>
-          <th>Dish</th>
-          <th>Description</th>
-          <th>Price</th>
-          <th>Order</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Paneer Tikka</td>
-          <td>Grilled paneer cubes marinated in spices</td>
-          <td>₹150</td>
-          <td><button class="btn add-cart">Add to Cart</button></td>
-        </tr>
-        <tr>
-          <td>Veg Biryani</td>
-          <td>Fragrant rice cooked with vegetables & spices</td>
-          <td>₹200</td>
-          <td><button class="btn add-cart">Add to Cart</button></td>
-        </tr>
-        <tr>
-          <td>Butter Chicken</td>
-          <td>Creamy tomato-based chicken curry</td>
-          <td>₹250</td>
-          <td><button class="btn add-cart">Add to Cart</button></td>
-        </tr>
-        <tr>
-          <td>Chocolate Cake</td>
-          <td>Rich and moist chocolate layered cake</td>
-          <td>₹120</td>
-          <td><button class="btn add-cart">Add to Cart</button></td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
+</header>
 
-  <!-- Footer -->
+<section class="menu-section">
+  <h2>Our Menu</h2>
+  <div class="menu-grid">
+    <div class="menu-item" data-name="Paneer Tikka" data-price="150">
+      <img src="images/dishes/image.png" alt="Paneer Tikka">
+      <h3>Paneer Tikka</h3>
+      <div class="price">₹150</div>
+      <button class="add-cart">Add to Cart</button>
+    </div>
+
+    <div class="menu-item" data-name="Veg Biryani" data-price="200">
+       <img src="images/dishes/image.png" alt="Veg Biryani">
+      <h3>Veg Biryani</h3>
+      <div class="price">₹200</div>
+      <button class="add-cart">Add to Cart</button>
+    </div>
+
+    <div class="menu-item" data-name="Butter Chicken" data-price="250">
+       <img src="images/dishes/image.png" alt="Butter Chicken">
+      <h3>Butter Chicken</h3>
+      <div class="price">₹250</div>
+      <button class="add-cart">Add to Cart</button>
+    </div>
+
+    <div class="menu-item" data-name="Chocolate Cake" data-price="120">
+       <img src="images/dishes/image.png" alt="Chocolate Cake">
+      <h3>Chocolate Cake</h3>
+      <div class="price">₹120</div>
+      <button class="add-cart">Add to Cart</button>
+    </div>
+
+    <!-- New Items -->
+    <div class="menu-item" data-name="Salad Bowl" data-price="100">
+      <img src="images/dishes/image.png" alt="Salad Bowl">
+      <h3>Salad Bowl</h3>
+      <div class="price">₹100</div>
+      <button class="add-cart">Add to Cart</button>
+    </div>
+
+    <div class="menu-item" data-name="Cold Drink" data-price="50">
+     <img src="images/dishes/image.png" alt="Cold Drink">
+      <h3>Cold Drink</h3>
+      <div class="price">₹50</div>
+      <button class="add-cart">Add to Cart</button>
+    </div>
+
+    <div class="menu-item" data-name="Grilled Sandwich" data-price="130">
+      <img src="images/dishes/image.png" alt="Grilled Sandwich">
+      <h3>Grilled Sandwich</h3>
+      <div class="price">₹130</div>
+      <button class="add-cart">Add to Cart</button>
+    </div>
+
+    <div class="menu-item" data-name="Paneer Butter Masala" data-price="220">
+       <img src="images/dishes/image.png" alt="Paneer Butter Masala">
+      <h3>Paneer Butter Masala</h3>
+      <div class="price">₹220</div>
+      <button class="add-cart">Add to Cart</button>
+    </div>
+
+    <div class="menu-item" data-name="French Fries" data-price="90">
+      <img src="images/dishes/image.png" alt="French Fries">
+      <h3>French Fries</h3>
+      <div class="price">₹90</div>
+      <button class="add-cart">Add to Cart</button>
+    </div>
+
+    <div class="menu-item" data-name="Mango Lassi" data-price="80">
+      <img src="images/dishes/image.png"alt="Mango Lassi">
+      <h3>Mango Lassi</h3>
+      <div class="price">₹80</div>
+      <button class="add-cart">Add to Cart</button>
+    </div>
+
+     <div class="menu-item" data-name="Mango Lassi" data-price="80">
+      <img src="images/dishes/image.png"alt="Mango Lassi">
+      <h3>Mango Lassi</h3>
+      <div class="price">₹80</div>
+      <button class="add-cart">Add to Cart</button>
+    </div>
+
+     <div class="menu-item" data-name="Mango Lassi" data-price="80">
+      <img src="images/dishes/image.png"alt="Mango Lassi">
+      <h3>Mango Lassi</h3>
+      <div class="price">₹80</div>
+      <button class="add-cart">Add to Cart</button>
+    </div>
+
+  </div>
+</section>
+
+
+<script>
+  // Add to cart functionality
+  const buttons = document.querySelectorAll('.add-cart');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation(); // prevent card click
+      const item = btn.closest('.menu-item');
+      const name = item.getAttribute('data-name');
+      const price = item.getAttribute('data-price');
+
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.push({ name, price });
+      localStorage.setItem('cart', JSON.stringify(cart));
+
+      alert(`${name} added to cart ✅`);
+    });
+  });
+</script>
+
+
+<!-- Footer -->
   <footer>
     <p>© 2025 Catering Service | All Rights Reserved</p>
   </footer>
 
-  <script>
-    // Add to cart using localStorage
-    const buttons = document.querySelectorAll(".add-cart");
-
-    buttons.forEach(btn => {
-      btn.addEventListener("click", () => {
-        let row = btn.closest("tr"); // row of the button
-        let itemName = row.cells[0].innerText; // dish name
-        let itemPrice = row.cells[2].innerText; // price
-
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-        cart.push({ name: itemName, price: itemPrice });
-
-        localStorage.setItem("cart", JSON.stringify(cart));
-
-        alert(itemName + " added to cart ✅");
-      });
-    });
-  </script>
 </body>
 </html>
+

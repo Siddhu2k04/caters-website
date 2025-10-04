@@ -3,75 +3,173 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Checkout</title>
+  <link rel="stylesheet" href="css\style.css">
+
+  <title>Checkout | Catering Service</title>
   <style>
-    body { font-family:Arial,sans-serif; background:#f4f4f9; margin:0; padding:20px; }
-    .container { max-width:700px; margin:auto; background:#fff; padding:20px; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
-    h2 { text-align:center; margin-bottom:20px; }
-    table { width:100%; border-collapse:collapse; margin-bottom:20px; }
-    th,td { border:1px solid #ddd; padding:10px; text-align:center; }
-    th { background:#ff9800; color:#fff; }
-    .totals { text-align:right; font-size:16px; margin-top:15px; }
-    .btn { background:#ff9800; color:#fff; border:none; padding:12px; width:100%; border-radius:6px; font-size:16px; cursor:pointer; }
-    .btn:hover { background:#e68900; }
-    label { display:block; margin:10px 0 5px; font-weight:bold; }
-    input[type="number"], input[type="text"], input[type="tel"] { width:100%; padding:10px; border-radius:6px; border:1px solid #ccc; outline:none; }
-    input:focus { border-color:#ff9800; box-shadow:0 0 5px rgba(255,152,0,0.5); }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f9f9f9;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #ff7f50;
+      margin-bottom: 30px;
+      font-size: 2rem;
+    }
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      font-weight: 600;
+      color: #555;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+    input:focus {
+      border-color: #ff7f50;
+      box-shadow: 0 0 8px rgba(255,127,80,0.3);
+      outline: none;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 25px 0;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: center;
+    }
+    th {
+      background: #ff7f50;
+      color: #fff;
+    }
+    .totals {
+      text-align: right;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      margin-top: 20px;
+      background: #ff7f50;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn:hover {
+      background: #ff5722;
+      transform: scale(1.03);
+    }
+    @media (max-width: 768px) {
+      .container { padding: 20px; }
+      th, td { font-size: 13px; }
+    }
   </style>
+
 </head>
 <body>
+
+
+  <!-- Navbar -->
+  <header>
+  <nav class="navbar">
+    <div class="logo">
+      <img src="images/logo.png" alt="Catering Logo" />
+      <h1>Catering Service</h1>
+    </div>
+
+    <!-- Navigation links -->
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="cart.html">Order</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="admin.html">Admin</a></li>
+    </ul>
+
+    <!-- Mobile Menu Toggle Button -->
+    <button class="menu-toggle">☰</button>
+  </nav>
+</header>
+
+<script>
+  const toggleBtn = document.querySelector(".menu-toggle");
+  const navLinks = document.querySelector(".nav-links");
+
+  toggleBtn.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+  });
+</script>
+
+
   <div class="container">
-    <h2>Order Summary</h2>
+    <h2>Checkout</h2>
 
-    <!-- Customer Name -->
-    <label for="customerName">Customer Name:</label>
-    <input type="text" id="customerName" name="customerName" placeholder="Enter your name">
+    <label for="customerName">Name:</label>
+    <input type="text" id="customerName" placeholder="Enter your name" required>
 
-    <!-- Mobile Number -->
     <label for="customerMobile">Mobile Number:</label>
-    <input type="tel" id="customerMobile" name="customerMobile" placeholder="Enter your mobile number">
+    <input type="tel" id="customerMobile" placeholder="Enter 10-digit mobile number" maxlength="10" required>
 
-    <!-- Number of People -->
+    <label for="order-date">Select Date:</label>
+    <input type="date" id="order-date" required>
+
     <label for="people">Number of People:</label>
-    <input type="number" id="people" name="people" min="1" value="1">
+    <input type="number" id="people" min="1" value="1" required>
 
     <div id="order-summary"></div>
+
     <button class="btn" id="paymentBtn">Proceed to Payment</button>
   </div>
 
   <script>
     const order = JSON.parse(localStorage.getItem("orderDetails"));
     const summaryDiv = document.getElementById("order-summary");
-    const peopleInput = document.getElementById("people");
-    const paymentBtn = document.getElementById("paymentBtn");
-    const nameInput = document.getElementById("customerName");
-    const mobileInput = document.getElementById("customerMobile");
 
-    // Render Order Summary
+    // ✅ Render Order Summary
     function renderOrderSummary() {
-      const numPeople = parseInt(peopleInput.value) || 1;
-
       if (!order || !order.dishes || order.dishes.length === 0) {
         summaryDiv.innerHTML = "<p>No order found ❌</p>";
         return;
       }
 
+      const numPeople = parseInt(document.getElementById("people").value) || 1;
       let subtotal = 0;
-      let html = "<table><tr><th>Dish</th><th>Price per person (₹)</th><th>Total for people (₹)</th></tr>";
+      let html = "<table><tr><th>Dish</th><th>Price (₹)</th><th>Total (₹)</th></tr>";
 
       order.dishes.forEach(item => {
-        let priceNum = typeof item.price === "string" ? parseFloat(item.price.replace(/[^0-9.]/g, '')) : item.price;
-        let totalForDish = priceNum * numPeople;
-        subtotal += totalForDish;
-        html += `<tr>
-          <td>${item.name}</td>
-          <td>₹${priceNum.toFixed(2)}</td>
-          <td>₹${totalForDish.toFixed(2)}</td>
-        </tr>`;
+        let price = typeof item.price === "string" ? parseFloat(item.price.replace(/[^0-9.]/g,'')) : item.price;
+        let total = price * numPeople;
+        subtotal += total;
+        html += `<tr><td>${item.name}</td><td>₹${price.toFixed(2)}</td><td>₹${total.toFixed(2)}</td></tr>`;
       });
 
-      const tax = subtotal * 0.05;        // 5% tax
-      const service = subtotal * 0.10;    // 10% service charge
+      const tax = subtotal * 0.05;
+      const service = subtotal * 0.10;
       const grandTotal = subtotal + tax + service;
 
       html += "</table>";
@@ -86,27 +184,70 @@
       localStorage.setItem("finalBill", grandTotal.toFixed(2));
     }
 
-    // Initial render
     renderOrderSummary();
+    document.getElementById("people").addEventListener("input", renderOrderSummary);
 
-    // Recalculate when number of people changes
-    peopleInput.addEventListener("input", renderOrderSummary);
+    // ✅ Proceed to Payment Button
+    document.getElementById("paymentBtn").addEventListener("click", async () => {
+      const name = document.getElementById("customerName").value.trim();
+      const mobile = document.getElementById("customerMobile").value.trim();
+      const date = document.getElementById("order-date").value;
+      const people = parseInt(document.getElementById("people").value);
 
-    // Save customer info & proceed to payment
-    paymentBtn.addEventListener("click", () => {
-      const name = nameInput.value.trim();
-      const mobile = mobileInput.value.trim();
+      const mobileRegex = /^[6-9]\d{9}$/;
 
-      if (!name || !mobile) {
-        alert("Please enter both your name and mobile number.");
-        return;
-      }
+      if (!name) return alert("Enter your name");
+      if (!mobileRegex.test(mobile)) return alert("Enter a valid 10-digit mobile number");
+      if (!date) return alert("Select order date");
+      if (!people || people < 1) return alert("Enter number of people");
 
-      localStorage.setItem("customerName", name);
-      localStorage.setItem("customerMobile", mobile);
+      const orderData = {
+        customerName: name,
+        customerMobile: mobile,
+        orderDate: date,
+        numberOfPeople: people,
+        dishes: order.dishes,
+        total: parseFloat(localStorage.getItem("finalBill")),
+        status: "Pending",
+        createdAt: new Date().toISOString()
+      };
 
-      window.location.href = "payment.html";
+      // ✅ Save to Firebase
+      window.saveOrderToFirebase(orderData);
     });
+  </script>
+
+  
+  <!-- ✅ Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.26.0/firebase-app.js";
+    import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/11.26.0/firebase-database.js";
+
+    // ✅ Your Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAFcR7dpuPLCKxKVF8U21ogtLARx2djXpM",
+      authDomain: "caters-710ea.firebaseapp.com",
+      databaseURL: "https://caters-710ea-default-rtdb.firebaseio.com/",
+      projectId: "caters-710ea",
+      storageBucket: "caters-710ea.appspot.com",
+      messagingSenderId: "1058333296618",
+      appId: "1:1058333296618:web:ba63fac8c4fca4758f5493",
+      measurementId: "G-XFB81TQHKS"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+
+    // ✅ Save order to Firebase
+    window.saveOrderToFirebase = async function(orderData) {
+      try {
+        await push(ref(database, 'orders/'), orderData);
+        alert("✅ Order saved to Firebase! Proceeding to payment...");
+        window.location.href = "payment.html";
+      } catch (err) {
+        alert("❌ Error saving order: " + err.message);
+      }
+    };
   </script>
 </body>
 </html>

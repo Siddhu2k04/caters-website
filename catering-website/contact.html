@@ -5,19 +5,132 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact Us - Catering Service</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="css\style.css">
+  <style>
+    /* Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
+    body { background: #f5f5f5; }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #ff7f50;
+      padding: 15px 20px;
+      flex-wrap: wrap;
+    }
+    .navbar .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .navbar .logo img { width: 50px; }
+    .navbar .logo h1 { color: white; font-size: 1.5rem; }
+    .navbar .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 15px;
+    }
+    .navbar .nav-links li a {
+      text-decoration: none;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: 0.3s;
+    }
+    .navbar .nav-links li a:hover,
+    .navbar .nav-links li a.active { background: #ff5722; }
+
+    .menu-toggle {
+      display: none;
+      font-size: 28px;
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+
+    /* Hero Section */
+    .contact-hero {
+      background: linear-gradient(135deg, #ff9800, #ff7f50);
+      color: white;
+      text-align: center;
+      padding: 70px 20px;
+    }
+    .contact-hero h2 { font-size: 2.5rem; margin-bottom: 10px; }
+    .contact-hero p { font-size: 1.2rem; }
+
+    /* Contact Cards */
+    .contact-cards {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 25px;
+      padding: 40px 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      width: 200px;
+      height: 200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+    }
+    .card i {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+      transition: transform 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+    .card:hover i {
+      transform: rotate(15deg);
+    }
+    .card span { font-weight: bold; font-size: 1rem; }
+
+    /* Footer Note */
+    .contact-note {
+      text-align: center;
+      margin: 40px 20px;
+      font-size: 1rem;
+      color: #555;
+    }
+
+    /* Responsive */
+    @media(max-width: 768px){
+      .navbar { flex-direction: column; align-items: flex-start; }
+      .navbar .nav-links { flex-direction: column; width: 100%; display: none; }
+      .navbar .nav-links.active { display: flex; }
+      .menu-toggle { display: block; }
+      .contact-cards { gap: 15px; }
+    }
+    @media(max-width: 480px){
+      .contact-hero h2 { font-size: 2rem; }
+      .contact-hero p { font-size: 1rem; }
+      .card { width: 150px; height: 150px; }
+      .card i { font-size: 2rem; }
+    }
+  </style>
 </head>
 <body>
 
   <!-- Navbar -->
-  <header>
   <nav class="navbar">
     <div class="logo">
-      <img src="images/logo.png" alt="Catering Logo" />
+      <img src="images/logo.png" alt="Logo">
       <h1>Catering Service</h1>
     </div>
-
-    <!-- Navigation links -->
     <ul class="nav-links">
       <li><a href="index.html" class="active">Home</a></li>
       <li><a href="menu.html">Menu</a></li>
@@ -26,94 +139,48 @@
       <li><a href="contact.html">Contact</a></li>
       <li><a href="admin.html">Admin</a></li>
     </ul>
-
-    <!-- Mobile Menu Toggle Button -->
     <button class="menu-toggle">☰</button>
   </nav>
-</header>
 
-<script>
-  const toggleBtn = document.querySelector(".menu-toggle");
-  const navLinks = document.querySelector(".nav-links");
-
-  toggleBtn.addEventListener("click", () => {
-    navLinks.classList.toggle("active");
-  });
-</script>
-<style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #f8f9fa, #e9ecef); min-height: 100vh; }
-
-    /* Hero / Contact Header */
-    .contact-hero {
-      text-align: center;
-      padding: 60px 20px 30px;
-      background: #ff9800;
-      color: white;
-    }
-    .contact-hero h2 { font-size: 2.2rem; margin-bottom: 10px; }
-    .contact-hero p { font-size: 1.1rem; }
-
-    /* Contact Icons Section */
-    .contact-icons {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 25px;
-      margin: 40px 20px;
-    }
-    .contact-icons a {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      font-size: 28px;
-      color: white;
-      transition: all 0.3s ease;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-      text-decoration: none;
-    }
-    .contact-icons a.email { background: #6c63ff; }
-    .contact-icons a.map { background: #ff3d00; }
-    .contact-icons a.whatsapp { background: #25D366; }
-    .contact-icons a.instagram { background: #C13584; }
-    .contact-icons a.phone { background: #007BFF; }
-
-    .contact-icons a:hover {
-      transform: translateY(-5px) scale(1.1);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    }
-
-    /* Footer note */
-    .contact-note { text-align: center; margin: 30px 20px; font-size: 1rem; color: #495057; }
-
-    @media (max-width: 768px) {
-      .navbar { flex-direction: column; gap: 10px; }
-      .navbar .nav-links { flex-direction: column; gap: 10px; }
-      .contact-icons a { width: 60px; height: 60px; font-size: 24px; }
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Hero / Header -->
+  <!-- Hero Section -->
   <section class="contact-hero">
     <h2>Get in Touch with Us</h2>
-    <p>Reach out via email, WhatsApp, call or visit our location!</p>
+    <p>Reach out via Email, WhatsApp, Call, or Visit our Location</p>
   </section>
 
-  <!-- Contact Icons -->
-  <section class="contact-icons">
-    <a href="mailto:info@cateringservice.com" class="email" title="Email"><i class="fas fa-envelope"></i></a>
-    <a href="https://maps.app.goo.gl/BMNprcBeADoPB6PZ7" target="_blank" class="map" title="Map"><i class="fas fa-map-marker-alt"></i></a>
-    <a href="https://wa.me/9834080645" target="_blank" class="whatsapp" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-    <a href="https://instagram.com/yourhandle" target="_blank" class="instagram" title="Instagram"><i class="fab fa-instagram"></i></a>
-    <a href="tel:+919834080645" class="phone" title="Phone"><i class="fas fa-phone-alt"></i></a>
+  <!-- Contact Cards -->
+  <section class="contact-cards">
+    <a href="mailto:info@cateringservice.com" class="card email">
+      <i class="fas fa-envelope"></i>
+      <span>Email</span>
+    </a>
+    <a href="https://maps.app.goo.gl/BMNprcBeADoPB6PZ7" target="_blank" class="card map">
+      <i class="fas fa-map-marker-alt"></i>
+      <span>Location</span>
+    </a>
+    <a href="https://wa.me/9834080645" target="_blank" class="card whatsapp">
+      <i class="fab fa-whatsapp"></i>
+      <span>WhatsApp</span>
+    </a>
+    <a href="https://instagram.com/yourhandle" target="_blank" class="card instagram">
+      <i class="fab fa-instagram"></i>
+      <span>Instagram</span>
+    </a>
+    <a href="tel:+919834080645" class="card phone">
+      <i class="fas fa-phone-alt"></i>
+      <span>Call</span>
+    </a>
   </section>
 
-  <p class="contact-note">We are available 24/7. Tap on any icon to contact us instantly!</p>
+  <p class="contact-note">We are available 24/7. Tap any icon to contact us instantly!</p>
+
+  <script>
+    const toggleBtn = document.querySelector(".menu-toggle");
+    const navLinks = document.querySelector(".nav-links");
+    toggleBtn.addEventListener("click", () => {
+      navLinks.classList.toggle("active");
+    });
+  </script>
 
 </body>
 </html>

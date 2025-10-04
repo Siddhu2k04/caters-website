@@ -5,16 +5,107 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Payment</title>
   <style>
-    body { font-family:Arial,sans-serif; background:#f9f9f9; margin:0; padding:20px; text-align:center; }
-    .container { max-width:400px; margin:auto; background:#fff; padding:20px; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
-    h2 { margin-bottom:20px; }
-    .qr { margin:20px 0; }
-    .amount { font-size:18px; margin-bottom:15px; font-weight:bold; }
-    .btn { margin-top:15px; padding:12px 20px; border:none; background:#ff9800; color:#fff; border-radius:6px; font-size:16px; cursor:pointer; width:100%; }
-    .btn:hover { background:#e68900; }
-    .method-btn { margin:10px 0; padding:12px; border:none; background:#eee; border-radius:6px; cursor:pointer; width:100%; transition:0.3s; }
-    .method-btn:hover { background:#ddd; }
-    .success { margin-top:20px; padding:15px; border-radius:6px; background:#d4edda; color:#155724; display:none; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: #fff;
+      padding: 25px 20px;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #ff7f50;
+    }
+
+    .amount {
+      font-size: 18px;
+      margin-bottom: 15px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .qr {
+      margin: 20px 0;
+    }
+
+    .qr img {
+      width: 100%;
+      max-width: 250px;
+      border-radius: 8px;
+    }
+
+    .btn, .method-btn, .return-btn {
+      margin: 10px 0;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+      transition: 0.3s;
+    }
+
+    .btn {
+      background: #ff7f50;
+      color: #fff;
+    }
+
+    .btn:hover {
+      background: #ff5722;
+    }
+
+    .method-btn {
+      background: #eee;
+    }
+
+    .method-btn:hover {
+      background: #ddd;
+    }
+
+    .return-btn {
+      background: #ccc;
+    }
+
+    .return-btn:hover {
+      background: #bbb;
+    }
+
+    .success {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      background: #d4edda;
+      color: #155724;
+      display: none;
+      font-weight: bold;
+    }
+
+    @media(max-width:480px){
+      .container {
+        padding: 20px 15px;
+      }
+      h2 {
+        font-size: 1.5rem;
+      }
+      .btn, .method-btn, .return-btn {
+        font-size: 14px;
+        padding: 10px 15px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -25,8 +116,7 @@
     <!-- QR Payment Option -->
     <h3>Scan QR Code to Pay</h3>
     <div class="qr">
-      <!-- Replace src with your UPI QR code -->
-      <img src="images/qr-code.png" alt="Scan to Pay" width="250">
+      <img src="images/qr-code.png" alt="Scan to Pay">
     </div>
     <button class="btn" id="qrPaidBtn">I Have Paid</button>
 
@@ -34,36 +124,45 @@
     <h3>Or Pay Cash on Delivery (COD)</h3>
     <button class="method-btn" id="codBtn">Cash on Delivery</button>
 
+    <!-- Return to Cart -->
+    <button class="return-btn" id="returnBtn">Return to Cart</button>
+
     <div id="confirmation" class="success"></div>
   </div>
 
   <script>
-    // Display total payable
     const total = localStorage.getItem("finalBill") || 0;
     document.getElementById("amount").innerText = total;
-
     const confirmation = document.getElementById("confirmation");
 
-    // QR Payment confirmation
-    document.getElementById("qrPaidBtn").addEventListener("click", () => {
+    function completePayment(message) {
       confirmation.style.display = "block";
-      confirmation.innerHTML = "✅ Payment confirmed via QR! Your order has been placed.";
+      confirmation.innerHTML = message;
 
       // Clear cart/order info
       localStorage.removeItem("cart");
       localStorage.removeItem("orderDetails");
       localStorage.removeItem("finalBill");
+
+      // Redirect to home after 3 seconds
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 3000);
+    }
+
+    // QR Payment confirmation
+    document.getElementById("qrPaidBtn").addEventListener("click", () => {
+      completePayment("✅ Payment confirmed via QR! Redirecting to Home...");
     });
 
     // COD Payment confirmation
     document.getElementById("codBtn").addEventListener("click", () => {
-      confirmation.style.display = "block";
-      confirmation.innerHTML = "✅ Order placed! You can pay in cash on delivery.";
+      completePayment("✅ Order placed! You can pay in cash on delivery. Redirecting to Home...");
+    });
 
-      // Clear cart/order info
-      localStorage.removeItem("cart");
-      localStorage.removeItem("orderDetails");
-      localStorage.removeItem("finalBill");
+    // Return to cart button
+    document.getElementById("returnBtn").addEventListener("click", () => {
+      window.location.href = "cart.html";
     });
   </script>
 </body>

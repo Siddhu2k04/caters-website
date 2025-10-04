@@ -1,40 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Panel - Catering Orders</title>
-  <link rel="stylesheet" href="css/style.css">
-  <style>
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 20px 0;
-    }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      text-align: center;
-    }
-    th {
-      background: #ff2929;
-      color: white;
-    }
-    .btn {
-      padding: 6px 12px;
-      margin: 2px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .approve { background: green; color: white; }
-    .reject { background: red; color: white; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel - Catering Orders</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+  table { width:100%; border-collapse:collapse; margin:20px 0;}
+  th, td { border:1px solid #ddd; padding:10px; text-align:center;}
+  th { background:#ff2929; color:white; }
+  .btn { padding:6px 12px; margin:2px; border:none; border-radius:5px; cursor:pointer;}
+  .approve { background:green; color:white; }
+  .reject { background:red; color:white; }
+</style>
 </head>
 <body>
 
-    <!-- Navbar -->
+  
   <header>
   <nav class="navbar">
     <div class="logo">
@@ -65,13 +47,18 @@
     navLinks.classList.toggle("active");
   });
 </script>
+
+
   <h1>Admin Panel - Orders</h1>
   <table>
     <thead>
       <tr>
+        <th>Customer</th>
+        <th>Mobile</th>
         <th>Dishes</th>
         <th>Date</th>
         <th>People</th>
+        <th>Total</th>
         <th>Status</th>
         <th>Action</th>
       </tr>
@@ -79,37 +66,54 @@
     <tbody id="orders-table"></tbody>
   </table>
 
-  <script>
-    function loadOrders() {
-      const orders = JSON.parse(localStorage.getItem("orders")) || [];
-      const table = document.getElementById("orders-table");
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.26.0/firebase-app.js";
+    import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/11.26.0/firebase-database.js";
+
+   const firebaseConfig = {
+  apiKey: "AIzaSyAFcR7dpuPLCKxKVF8U21ogtLARx2djXpM",
+  authDomain: "caters-710ea.firebaseapp.com",
+  projectId: "caters-710ea",
+  storageBucket: "caters-710ea.firebasestorage.app",
+  messagingSenderId: "1058333296618",
+  appId: "1:1058333296618:web:ba63fac8c4fca4758f5493",
+  measurementId: "G-XFB81TQHKS"
+};
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const ordersRef = ref(db, 'orders/');
+
+    const table = document.getElementById("orders-table");
+
+    onValue(ordersRef, (snapshot) => {
       table.innerHTML = "";
+      const data = snapshot.val();
+      if (data) {
+        Object.keys(data).forEach(key => {
+          const order = data[key];
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${order.customerName}</td>
+            <td>${order.customerMobile}</td>
+            <td>${order.dishes.map(d=>d.name).join(", ")}</td>
+            <td>${order.orderDate}</td>
+            <td>${order.numberOfPeople}</td>
+            <td>₹${order.total}</td>
+            <td>${order.status}</td>
+            <td>
+              <button class="btn approve" onclick="updateStatus('${key}','Approved')">Approve</button>
+              <button class="btn reject" onclick="updateStatus('${key}','Rejected')">Reject</button>
+            </td>
+          `;
+          table.appendChild(row);
+        });
+      }
+    });
 
-      orders.forEach((order, index) => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td>${order.dishes.join(", ")}</td>
-          <td>${order.date}</td>
-          <td>${order.people}</td>
-          <td>${order.status}</td>
-          <td>
-            <button class="btn approve" onclick="updateStatus(${index}, 'Approved')">Approve</button>
-            <button class="btn reject" onclick="updateStatus(${index}, 'Rejected')">Reject</button>
-          </td>
-        `;
-        table.appendChild(row);
-      });
+    window.updateStatus = function(key, status) {
+      update(ref(db, 'orders/' + key), { status });
     }
-
-    function updateStatus(index, status) {
-      let orders = JSON.parse(localStorage.getItem("orders")) || [];
-      orders[index].status = status;
-      localStorage.setItem("orders", JSON.stringify(orders));
-      loadOrders();
-    }
-
-    loadOrders();
   </script>
-
 </body>
 </html>
