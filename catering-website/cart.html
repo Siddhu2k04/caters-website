@@ -4,124 +4,90 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Your Cart</title>
-  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body { font-family:'Segoe UI',sans-serif; background:#f9f9f9; margin:0; padding:0; }
+    .navbar { display:flex; justify-content:space-between; align-items:center; background:#333; color:#fff; padding:10px 20px; }
+    .navbar .logo { display:flex; align-items:center; gap:10px; }
+    .navbar .logo img { height:40px; }
+    .nav-links { list-style:none; display:flex; gap:15px; }
+    .nav-links li a { color:#fff; text-decoration:none; }
+    .nav-links li a:hover { color:#ff9800; }
+    .order-section { max-width:800px; margin:40px auto; background:#fff; padding:25px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
+    h2 { text-align:center; margin-bottom:20px; }
+    table { width:100%; border-collapse:collapse; margin:20px 0; }
+    th,td { border:1px solid #ddd; padding:10px; text-align:center; }
+    th { background:#ff9800; color:#fff; }
+    label { font-weight:bold; margin-top:12px; display:block; }
+    input { width:100%; padding:10px; margin:5px 0 15px; border:1px solid #ccc; border-radius:6px; }
+    .btn { background:#ff9800; color:#fff; border:none; padding:12px; width:100%; border-radius:6px; font-size:16px; cursor:pointer; }
+    .btn:hover { background:#e68900; }
+  </style>
 </head>
 <body>
-
-       <!-- Navbar -->
-  <header>
-  <nav class="navbar">
-    <div class="logo">
-      <img src="images/logo.png" alt="Catering Logo" />
-      <h1>Catering Service</h1>
-    </div>
-
-     <!-- Navigation links -->
-    <ul class="nav-links">
-      <li><a href="index.html" class="active">Home</a></li>
-      <li><a href="menu.html">Menu</a></li>
-      <li><a href="cart.html">Order</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li><a href="admin.html">Admin</a></li>
-    </ul>
-
-    <!-- Mobile Menu Toggle Button -->
-    <button class="menu-toggle">☰</button>
-  </nav>
-</header>
-
-
-
-
-<script>
-  const toggleBtn = document.querySelector(".menu-toggle");
-  const navLinks = document.querySelector(".nav-links");
-
-  toggleBtn.addEventListener("click", () => {
-    navLinks.classList.toggle("active");
-  });
-  </script>
-
+  <!-- Navbar -->
   <header>
     <nav class="navbar">
       <div class="logo">
-        <h1>Your Order</h1>
+        <img src="images/logo.png" alt="Catering Logo" />
+        <h1>Catering Service</h1>
       </div>
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="menu.html">Menu</a></li>
         <li><a href="cart.html" class="active">Order</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
   </header>
 
+  <!-- Order Section -->
+  <section class="order-section">
+    <h2>Place Your Order</h2>
+    <form>
+      <div id="cart-items"></div>
 
+      <label for="order-date">Select Date:</label>
+      <input type="date" id="order-date" required>
 
+      <label for="people">Number of People:</label>
+      <input type="number" id="people" min="1" required>
 
- <section class="order-section">
-  <h2>Place Your Order</h2>
-  <form class="order-form">
-    <!-- Menu selection -->
-   <!-- Menu Selection with Checkboxes -->
-<label>Select Menu Items:</label>
-<div class="menu-checkboxes">
-  <label><input type="checkbox" name="menu-item" value="Paneer Tikka"> Paneer Tikka</label><br>
-  <label><input type="checkbox" name="menu-item" value="Veg Biryani"> Veg Biryani</label><br>
-  <label><input type="checkbox" name="menu-item" value="Chicken Curry"> Chicken Curry</label><br>
-  <label><input type="checkbox" name="menu-item" value="Dal Tadka"> Dal Tadka</label><br>
-  <label><input type="checkbox" name="menu-item" value="Gulab Jamun"> Gulab Jamun</label><br>
-  <label><input type="checkbox" name="menu-item" value="Butter Naan"> Butter Naan</label>
-</div>
+      <button type="button" class="btn" id="checkoutBtn">Proceed to Checkout</button>
+    </form>
+  </section>
 
+  <script>
+    const cartItemsContainer = document.getElementById("cart-items");
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    <!-- Date -->
-    <label for="order-date">Select Date:</label>
-    <input type="date" id="order-date" name="order-date" required>
-
-    <!-- Number of people -->
-    <label for="people">Number of People:</label>
-    <input type="number" id="people" name="people" min="1" required>
-
-    <!-- Submit button -->
-    <button type="submit" class="btn">Order Now</button>
-  </form>
-
-  <!-- Confirmation message -->
-  <div id="confirmation-message" style="display:none; margin-top:15px; color:green; font-weight:bold;">
-    ✅ Your order has been placed successfully!
-  </div>
-</section>
-
-
-
-<script>
-  const orderForm = document.querySelector(".order-form");
-  const confirmationMsg = document.getElementById("confirmation-message");
-
-  orderForm.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    // Collect checked items
-    const selectedDishes = Array.from(document.querySelectorAll("input[name='menu-item']:checked"))
-                               .map(checkbox => checkbox.value);
-
-    const date = document.getElementById("order-date").value;
-    const people = document.getElementById("people").value;
-
-    if (selectedDishes.length > 0 && date && people) {
-      confirmationMsg.innerHTML =
-        `✅ Order placed for <b>${selectedDishes.join(", ")}</b> 
-         on <b>${date}</b> for <b>${people} people</b>.`;
-      confirmationMsg.style.display = "block";
-      orderForm.reset();
+    if (cart.length === 0) {
+      cartItemsContainer.innerHTML = "<p>Your cart is empty ❌</p>";
     } else {
-      confirmationMsg.innerHTML = "⚠️ Please select at least one dish, a date, and number of people.";
-      confirmationMsg.style.display = "block";
-      confirmationMsg.style.color = "red";
+      let html = "<h3>Items in your cart:</h3><table><tr><th>Select</th><th>Dish</th><th>Price</th></tr>";
+      cart.forEach(item => {
+        html += `<tr>
+          <td><input type="checkbox" name="menu-item" value="${item.name}" checked></td>
+          <td>${item.name}</td>
+          <td>${item.price}</td>
+        </tr>`;
+      });
+      html += "</table>";
+      cartItemsContainer.innerHTML = html;
     }
-  });
-</script>
 
+    document.getElementById("checkoutBtn").addEventListener("click", () => {
+      const selectedDishes = Array.from(document.querySelectorAll("input[name='menu-item']:checked")).map(cb => cb.value);
+      const date = document.getElementById("order-date").value;
+      const people = document.getElementById("people").value;
+
+      if (selectedDishes.length > 0 && date && people) {
+        localStorage.setItem("orderDetails", JSON.stringify({ dishes: cart, date, people }));
+        window.location.href = "checkout.html";
+      } else {
+        alert("⚠️ Please select at least one dish, a date, and number of people.");
+      }
+    });
+  </script>
 </body>
 </html>

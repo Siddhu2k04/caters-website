@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout</title>
+  <style>
+    body { font-family:Arial,sans-serif; background:#f4f4f9; margin:0; padding:20px; }
+    .container { max-width:700px; margin:auto; background:#fff; padding:20px; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
+    h2 { text-align:center; margin-bottom:20px; }
+    table { width:100%; border-collapse:collapse; margin-bottom:20px; }
+    th,td { border:1px solid #ddd; padding:10px; text-align:center; }
+    th { background:#ff9800; color:#fff; }
+    .totals { text-align:right; font-size:16px; margin-top:15px; }
+    .btn { background:#ff9800; color:#fff; border:none; padding:12px; width:100%; border-radius:6px; font-size:16px; cursor:pointer; }
+    .btn:hover { background:#e68900; }
+    label { display:block; margin:10px 0 5px; font-weight:bold; }
+    input[type="number"] { width:100%; padding:10px; border-radius:6px; border:1px solid #ccc; outline:none; }
+    input[type="number"]:focus { border-color:#ff9800; box-shadow:0 0 5px rgba(255,152,0,0.5); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Order Summary</h2>
+
+    <!-- Number of People -->
+    <label for="people">Number of People:</label>
+    <input type="number" id="people" name="people" min="1" value="1">
+
+    <div id="order-summary"></div>
+    <button class="btn" id="paymentBtn">Proceed to Payment</button>
+  </div>
+
+  <script>
+    const order = JSON.parse(localStorage.getItem("orderDetails"));
+    const summaryDiv = document.getElementById("order-summary");
+    const peopleInput = document.getElementById("people");
+    const paymentBtn = document.getElementById("paymentBtn");
+
+    function renderOrderSummary() {
+      const numPeople = parseInt(peopleInput.value) || 1;
+
+      if (!order || !order.dishes || order.dishes.length === 0) {
+        summaryDiv.innerHTML = "<p>No order found ❌</p>";
+        return;
+      }
+
+      let subtotal = 0;
+      let html = "<table><tr><th>Dish</th><th>Price per person (₹)</th><th>Total for people (₹)</th></tr>";
+
+      order.dishes.forEach(item => {
+        let priceNum = typeof item.price === "string" ? parseFloat(item.price.replace(/[^0-9.]/g, '')) : item.price;
+        let totalForDish = priceNum * numPeople;
+        subtotal += totalForDish;
+        html += `<tr>
+          <td>${item.name}</td>
+          <td>₹${priceNum.toFixed(2)}</td>
+          <td>₹${totalForDish.toFixed(2)}</td>
+        </tr>`;
+      });
+
+      const tax = subtotal * 0.05;        // 5% tax
+      const service = subtotal * 0.10;    // 10% service charge
+      const grandTotal = subtotal + tax + service;
+
+      html += "</table>";
+      html += `<div class="totals">
+        <p>Subtotal: ₹${subtotal.toFixed(2)}</p>
+        <p>Tax (5%): ₹${tax.toFixed(2)}</p>
+        <p>Service Charge (10%): ₹${service.toFixed(2)}</p>
+        <h3>Total: ₹${grandTotal.toFixed(2)}</h3>
+      </div>`;
+
+      summaryDiv.innerHTML = html;
+      localStorage.setItem("finalBill", grandTotal.toFixed(2));
+    }
+
+    // Initial render
+    renderOrderSummary();
+
+    // Recalculate when number of people changes
+    peopleInput.addEventListener("input", renderOrderSummary);
+
+    // Proceed to payment
+    paymentBtn.addEventListener("click", () => {
+      window.location.href = "payment.html";
+    });
+  </script>
+</body>
+</html>

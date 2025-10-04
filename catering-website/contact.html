@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - Catering Service</title>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      min-height: 100vh;
+    }
+
+    /* Navbar styling */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+      background-color: #343a40;
+      color: white;
+      flex-wrap: wrap;
+    }
+
+    .navbar .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .navbar .logo img {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+    }
+
+    .navbar .logo h1 {
+      font-size: 1.5rem;
+      color: white;
+    }
+
+    .navbar .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+
+    .navbar .nav-links li a {
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .navbar .nav-links li a:hover,
+    .navbar .nav-links li a.active {
+      color: #f8d210;
+    }
+
+    /* Form container */
+    .form-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 60px 20px;
+    }
+
+    #contactForm {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 450px;
+    }
+
+    #contactForm h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #343a40;
+    }
+
+    #contactForm input,
+    #contactForm textarea {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 15px;
+      border: 1px solid #ced4da;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    #contactForm input:focus,
+    #contactForm textarea:focus {
+      outline: none;
+      border-color: #495057;
+      box-shadow: 0 0 5px rgba(73,80,87,0.3);
+    }
+
+    #contactForm textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    #contactForm button {
+      width: 100%;
+      padding: 12px;
+      background-color: #495057;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #contactForm button:hover {
+      background-color: #343a40;
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .navbar .nav-links {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <img src="images/logo.png" alt="Catering Logo">
+        <h1>Catering Service</h1>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="cart.html">Order</a></li>
+        <li><a href="about.html" class="active">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Contact Form -->
+  <div class="form-container">
+    <form id="contactForm">
+      <h2>Contact Us</h2>
+      <input type="text" id="cname" placeholder="Your Name" required>
+      <input type="email" id="cemail" placeholder="Your Email" required>
+      <textarea id="cmessage" placeholder="Message"></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+
+  <!-- Firebase scripts -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    const contactForm = document.getElementById("contactForm");
+    if (contactForm) {
+      contactForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        db.collection("messages").add({
+          name: document.getElementById("cname").value,
+          email: document.getElementById("cemail").value,
+          message: document.getElementById("cmessage").value,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        }).then(() => {
+          alert("Message sent!");
+          contactForm.reset();
+        }).catch((error) => {
+          console.error("Error adding message: ", error);
+        });
+      });
+    }
+  </script>
+
+</body>
+</html>

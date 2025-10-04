@@ -8,40 +8,33 @@
 </head>
 <body>
 
-      <!-- Navbar -->
+  <!-- Navbar -->
   <header>
-  <nav class="navbar">
-    <div class="logo">
-      <img src="images/logo.png" alt="Catering Logo" />
-      <h1>Catering Service</h1>
-    </div>
+    <nav class="navbar">
+      <div class="logo">
+        <img src="images/logo.png" alt="Catering Logo" />
+        <h1>Catering Service</h1>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="cart.html">Order</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="admin.html">Admin</a></li>
+      </ul>
+      <button class="menu-toggle">☰</button>
+    </nav>
+  </header>
 
-     <!-- Navigation links -->
-    <ul class="nav-links">
-      <li><a href="index.html" class="active">Home</a></li>
-      <li><a href="menu.html">Menu</a></li>
-      <li><a href="cart.html">Order</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li><a href="admin.html">Admin</a></li>
-    </ul>
+  <script>
+    const toggleBtn = document.querySelector(".menu-toggle");
+    const navLinks = document.querySelector(".nav-links");
+    toggleBtn.addEventListener("click", () => {
+      navLinks.classList.toggle("active");
+    });
+  </script>
 
-    <!-- Mobile Menu Toggle Button -->
-    <button class="menu-toggle">☰</button>
-  </nav>
-</header>
-
-
-
-
-<script>
-  const toggleBtn = document.querySelector(".menu-toggle");
-  const navLinks = document.querySelector(".nav-links");
-
-  toggleBtn.addEventListener("click", () => {
-    navLinks.classList.toggle("active");
-  });
-</script>
   <!-- Menu Section -->
   <section class="menu-section">
     <h2>Our Menu</h2>
@@ -89,29 +82,24 @@
   </footer>
 
   <script>
-  // Add to cart using localStorage
-  const buttons = document.querySelectorAll(".add-cart");
+    // Add to cart using localStorage
+    const buttons = document.querySelectorAll(".add-cart");
 
-  buttons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      let itemName = btn.getAttribute("data-name");
-      let itemPrice = btn.getAttribute("data-price");
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        let row = btn.closest("tr"); // row of the button
+        let itemName = row.cells[0].innerText; // dish name
+        let itemPrice = row.cells[2].innerText; // price
 
-      // Get existing cart or empty array
-      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-      // Push new item
-      cart.push({ name: itemName, price: itemPrice });
+        cart.push({ name: itemName, price: itemPrice });
 
-      // Save back to localStorage
-      localStorage.setItem("cart", JSON.stringify(cart));
+        localStorage.setItem("cart", JSON.stringify(cart));
 
-      alert(itemName + " added to cart ✅");
+        alert(itemName + " added to cart ✅");
+      });
     });
-  });
-</script>
-
-
-  <script src="js/menu.js"></script>
+  </script>
 </body>
 </html>
